@@ -30,6 +30,7 @@ function runMSE() {
 	var ms = new MediaSource();
 	var el = document.createElement("video");
 	el.src = URL.createObjectURL(ms);
+	el.setAttribute('controls', "");
 	el.preload = 'auto';
 	document.body.appendChild(el);
 
