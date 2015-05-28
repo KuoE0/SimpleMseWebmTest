@@ -5,6 +5,9 @@
  * Distributed under terms of the MIT license.
  */
 
+var isFirefox = typeof InstallTrigger !== 'undefined';
+var isChrome = !!window.chrome;
+
 function fetch(uri, onLoadToDo) {
 	var p = new Promise(function(resolve, reject) {
 		var xhr = new XMLHttpRequest();
@@ -32,7 +35,11 @@ function runMSE() {
 
 	ms.addEventListener("sourceopen", function () {
 		console.log("sourceopen");
-		var sb = ms.addSourceBuffer('video/webm');
+		var codec = undefined;
+		if (isFirefox) codec = 'video/webm';
+		else codec = 'video/webm; codecs="vp8"';
+
+		var sb = ms.addSourceBuffer(codec);
 		console.log("Source buffer added.");
 		fetch('seek.webm', function (response) {
 			var data = new Uint8Array(response);
